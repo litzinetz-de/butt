@@ -17,6 +17,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Daniel Litzbach
+#include <iostream>
+#include <fstream>
+
 #ifdef _WIN32
  #include <winsock2.h>
  #define usleep(us) Sleep(us/1000)
@@ -90,6 +94,20 @@ int ic_connect(void)
                 default:
                     ret = 2;
             }
+
+            // Daniel Litzbach: call onError
+            //char connect_script[100];
+            //strcpy(connect_script,getenv("HOME"));
+            //strcat(connect_script,"/butt_error.sh");
+            //system(connect_script);
+            //print_info(connect_script,0);
+            char statusfile_path[100];
+	    strcpy(statusfile_path,getenv("HOME"));
+            strcat(statusfile_path,"/test.txt");
+	    std::ofstream statusfile_handle;
+	    statusfile_handle.open(statusfile_path);
+	    statusfile_handle << "error";
+	    statusfile_handle.close();
 
             ic_disconnect();
             return ret;
@@ -279,6 +297,22 @@ int ic_connect(void)
 
     timer_init(&stream_timer, 1);       //starts the "online" timer
 
+    // Daniel Litzbach: call onConnect
+    /*char connect_script[100];
+    strcpy(connect_script,getenv("HOME"));
+    strcat(connect_script,"/butt_connect.sh");
+    system(connect_script);*/
+    //print_info(connect_script,0);
+    
+    char statusfile_path[100];
+    strcpy(statusfile_path,getenv("HOME"));
+    strcat(statusfile_path,"/test.txt");
+    std::ofstream statusfile_handle;
+    statusfile_handle.open(statusfile_path);
+    statusfile_handle << "conn";
+    statusfile_handle.close();
+
+
     return 0;
 }
 
@@ -374,6 +408,20 @@ int ic_update_song(void)
 
 void ic_disconnect(void)
 {
+    // Daniel Litzbach: call onDisconnect
+    //char connect_script[100];
+    //strcpy(connect_script,getenv("HOME"));
+    //strcat(connect_script,"/butt_disconnect.sh");
+    //system(connect_script);
+    //print_info(connect_script,0)
+    char statusfile_path[100];
+    strcpy(statusfile_path,getenv("HOME"));
+    strcat(statusfile_path,"/test.txt");
+    std::ofstream statusfile_handle;
+    statusfile_handle.open(statusfile_path);
+    statusfile_handle << "disconn";
+    statusfile_handle.close();
+
     sock_close(&stream_socket);
 }
 

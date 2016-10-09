@@ -18,6 +18,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Daniel Litzbach
+#include <iostream>
+#include <fstream>
+
 #include <lame/lame.h>
 #include <signal.h>
 #include <limits.h>
@@ -63,6 +67,10 @@ double kbytes_sent;
 double kbytes_written;
 unsigned int record_start_hour;
 
+// Daniel Litzbach
+char commandfile_path[100];
+std::string last_command;
+
 sec_timer rec_timer;
 sec_timer stream_timer;
 
@@ -76,7 +84,43 @@ flac_enc flac_rec;
 aac_enc aac_stream;
 aac_enc aac_rec;
 
-
+// Daniel Litzbach
+void process_commandfile(void*)
+{
+	//print_info("Ping",1);
+	std::string line;
+	std::ifstream commandfile_handle(commandfile_path);
+	if(commandfile_handle.is_open())
+	{
+		getline(commandfile_handle,line);
+		commandfile_handle.close();
+		
+		if(line != last_command) // Neuer Befehl
+		{
+			if(line == "conn")
+			{
+				//cout << "connected" << endl;
+				button_connect_cb();
+			}
+			else if(line == "disconn")
+				{
+				//cout << "disconnected" << endl;
+				button_disconnect_cb();
+			}
+			else
+			{
+				print_info("Unbekannte Anforderung",1);
+			}
+			last_command=line;
+		}
+		
+	} else {
+		print_info("Commandfile nicht lesbar",1);
+	}
+	commandfile_handle.close();
+	
+	Fl::repeat_timeout(0.2, process_commandfile);
+}
 
 int main(int argc, char *argv[])
 {
@@ -84,6 +128,10 @@ int main(int argc, char *argv[])
     char *p;
     char lcd_buf[33];
     char info_buf[256];
+    
+    // Daniel Litzbach
+    strcpy(commandfile_path,getenv("HOME"));
+    strcat(commandfile_path,"/command.txt");
 
 #ifndef _WIN32
     signal(SIGPIPE, SIG_IGN); //ignore the SIGPIPE signal.
@@ -190,6 +238,7 @@ int main(int argc, char *argv[])
 
     Fl::add_timeout(0.01, &vu_meter_timer);
     Fl::add_timeout(5, &display_rotate_timer);
+    Fl::add_timeout(0.2, process_commandfile); // Daniel Litzbach
 
     strcpy(lcd_buf, "idle");
     PRINT_LCD(lcd_buf, strlen(lcd_buf), 0, 1);
@@ -205,3 +254,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+

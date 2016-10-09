@@ -635,8 +635,8 @@ configure:5770: gcc -o conftest -g -O2   -L/usr/local/lib conftest.c -lfdk-aac -
 conftest.c:71:6: warning: conflicting types for built-in function 'pow' [enabled by default]
  char pow ();
       ^
-/tmp/ccIGWfLH.o: In function `main':
-/home/dl/Schreibtisch/butt-0.1.15/conftest.c:82: undefined reference to `pow'
+/tmp/ccndKSF4.o: In function `main':
+/home/dl/Entwicklung/Fanradio/butt/conftest.c:82: undefined reference to `pow'
 collect2: error: ld returned 1 exit status
 configure:5770: $? = 1
 configure: failed program was:
@@ -976,7 +976,7 @@ host_alias=''
 htmldir='${docdir}'
 includedir='${prefix}/include'
 infodir='${datarootdir}/info'
-install_sh='${SHELL} /home/dl/Schreibtisch/butt-0.1.15/install-sh'
+install_sh='${SHELL} /home/dl/Entwicklung/Fanradio/butt/install-sh'
 libdir='${exec_prefix}/lib'
 libexecdir='${exec_prefix}/libexec'
 localedir='${datarootdir}/locale'

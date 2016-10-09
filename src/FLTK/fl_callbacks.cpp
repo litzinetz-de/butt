@@ -21,6 +21,9 @@
 #include <time.h>
 #include <pthread.h>
 
+// Daniel Litzbach:
+#include <iostream>
+
 #ifdef _WIN32
  #define usleep(us) Sleep(us/1000)
 #else
@@ -173,6 +176,15 @@ void button_connect_cb(void)
 
     if(!connected)
         return;
+
+    // Daniel Litzbach: call onConnect
+    /*
+    char connect_script[100];
+    strcpy(connect_script,getenv("HOME"));
+    strcat(connect_script,"/butt_connect.sh");
+    system(connect_script);
+    print_info(connect_script,0);
+    */
 
 
     //we have to make sure that the first audio data
@@ -555,7 +567,8 @@ void button_disconnect_cb(void)
 
     if(recording)
     {
-        button = fl_choice("stop recording?", "Cancel", "Yes", "No");
+        //button = fl_choice("stop recording?", "Cancel", "Yes", "No");
+	button=1; // Daniel Litzbach: Aufnahme ohne Nachfrage immer stoppen, wenn Stream getrennt wird
         switch(button)
         {
             case 0:
@@ -623,6 +636,15 @@ void button_disconnect_cb(void)
             sc_disconnect();
         else
             ic_disconnect();
+
+        // Daniel Litzbach: call onDisconnect
+        /*
+        char connect_script[100];
+        strcpy(connect_script,getenv("HOME"));
+        strcat(connect_script,"/butt_disconnect.sh");
+        system(connect_script);
+        print_info(connect_script,0);
+        */
     }
     else
         print_info("Connecting canceled\n", 0);
