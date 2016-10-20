@@ -69,6 +69,7 @@ unsigned int record_start_hour;
 
 // Daniel Litzbach
 char commandfile_path[100];
+char statusfile_path[100];
 std::string last_command;
 
 sec_timer rec_timer;
@@ -83,6 +84,14 @@ opus_enc opus_rec;
 flac_enc flac_rec;
 aac_enc aac_stream;
 aac_enc aac_rec;
+
+void reset_commandfile()
+{
+	std::ofstream commandfile_handle;
+	commandfile_handle.open(commandfile_path);
+	commandfile_handle << "";
+	commandfile_handle.close();
+}
 
 // Daniel Litzbach
 void process_commandfile(void*)
@@ -107,11 +116,8 @@ void process_commandfile(void*)
 				//cout << "disconnected" << endl;
 				button_disconnect_cb();
 			}
-			else
-			{
-				print_info("Unbekannte Anforderung",1);
-			}
 			last_command=line;
+			reset_commandfile();
 		}
 		
 	} else {
@@ -131,7 +137,15 @@ int main(int argc, char *argv[])
     
     // Daniel Litzbach
     strcpy(commandfile_path,getenv("HOME"));
-    strcat(commandfile_path,"/command.txt");
+    strcat(commandfile_path,"/.butt_command.dat");
+    
+    // Daniel Litzbach: call onDisconnect (init)
+    strcpy(statusfile_path,getenv("HOME"));
+    strcat(statusfile_path,"/.butt_status.dat");
+    std::ofstream statusfile_handle;
+    statusfile_handle.open(statusfile_path);
+    statusfile_handle << "disconn";
+    statusfile_handle.close();
 
 #ifndef _WIN32
     signal(SIGPIPE, SIG_IGN); //ignore the SIGPIPE signal.
@@ -158,7 +172,7 @@ int main(int argc, char *argv[])
 
 
     snprintf(info_buf, sizeof(info_buf), "Starting %s\nWritten by Daniel Nöthen\n"
-    	"PayPal: bipak@gmx.net\n", PACKAGE_STRING);
+    	"Supercharged by Daniel Litzbach / SV98 Fanradio\n", PACKAGE_STRING);
     print_info(info_buf, 0);
 
 #ifdef _WIN32

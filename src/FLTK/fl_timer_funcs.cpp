@@ -144,14 +144,9 @@ void is_connected_timer(void*)
         Fl::remove_timeout(&is_connected_timer);
 
         // Daniel Litzbach: call onError
-        //char connect_script[100];
-        //strcpy(connect_script,getenv("HOME"));
-        //strcat(connect_script,"/butt_error.sh");
-        //system(connect_script);
-        //print_info(connect_script,0);
 	char statusfile_path[100];
 	strcpy(statusfile_path,getenv("HOME"));
-        strcat(statusfile_path,"/test.txt");
+        strcat(statusfile_path,"/.butt_status.dat");
 	std::ofstream statusfile_handle;
 	statusfile_handle.open(statusfile_path);
 	statusfile_handle << "error";

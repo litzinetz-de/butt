@@ -60,6 +60,15 @@ int ic_connect(void)
     char msg[100];
     char *http_retval;
     static bool error_printed = 0;
+    
+    // Daniel Litzbach: call onDial
+    char statusfile_path[100];
+    strcpy(statusfile_path,getenv("HOME"));
+    strcat(statusfile_path,"/.butt_status.dat");
+    std::ofstream statusfile_handle;
+    statusfile_handle.open(statusfile_path);
+    statusfile_handle << "dial";
+    statusfile_handle.close();
 
     for(int try_cnt = 0; try_cnt < tries; try_cnt++)
     {
@@ -96,14 +105,9 @@ int ic_connect(void)
             }
 
             // Daniel Litzbach: call onError
-            //char connect_script[100];
-            //strcpy(connect_script,getenv("HOME"));
-            //strcat(connect_script,"/butt_error.sh");
-            //system(connect_script);
-            //print_info(connect_script,0);
             char statusfile_path[100];
 	    strcpy(statusfile_path,getenv("HOME"));
-            strcat(statusfile_path,"/test.txt");
+            strcat(statusfile_path,"/.butt_status.dat");
 	    std::ofstream statusfile_handle;
 	    statusfile_handle.open(statusfile_path);
 	    statusfile_handle << "error";
@@ -298,16 +302,10 @@ int ic_connect(void)
     timer_init(&stream_timer, 1);       //starts the "online" timer
 
     // Daniel Litzbach: call onConnect
-    /*char connect_script[100];
-    strcpy(connect_script,getenv("HOME"));
-    strcat(connect_script,"/butt_connect.sh");
-    system(connect_script);*/
-    //print_info(connect_script,0);
-    
-    char statusfile_path[100];
-    strcpy(statusfile_path,getenv("HOME"));
-    strcat(statusfile_path,"/test.txt");
-    std::ofstream statusfile_handle;
+    //char statusfile_path[100];
+    //strcpy(statusfile_path,getenv("HOME"));
+    //strcat(statusfile_path,"/.butt_status.dat");
+    //std::ofstream statusfile_handle;
     statusfile_handle.open(statusfile_path);
     statusfile_handle << "conn";
     statusfile_handle.close();
@@ -409,14 +407,9 @@ int ic_update_song(void)
 void ic_disconnect(void)
 {
     // Daniel Litzbach: call onDisconnect
-    //char connect_script[100];
-    //strcpy(connect_script,getenv("HOME"));
-    //strcat(connect_script,"/butt_disconnect.sh");
-    //system(connect_script);
-    //print_info(connect_script,0)
     char statusfile_path[100];
     strcpy(statusfile_path,getenv("HOME"));
-    strcat(statusfile_path,"/test.txt");
+    strcat(statusfile_path,"/.butt_status.dat");
     std::ofstream statusfile_handle;
     statusfile_handle.open(statusfile_path);
     statusfile_handle << "disconn";
