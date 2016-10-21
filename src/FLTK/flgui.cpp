@@ -882,7 +882,7 @@ void flgui::cb_button_add_icy_save(Fl_Button* o, void* v) {
 }
 
 flgui::flgui() {
-  { window_main = new Fl_My_Double_Window(430, 420, "butt: SV98 Fanradio");
+  { window_main = new Fl_My_Double_Window(430, 420, "butt 0.1.15 - SV98 Fanradio Build 1610-01");
     window_main->box(FL_FLAT_BOX);
     window_main->color(FL_BACKGROUND_COLOR);
     window_main->selection_color(FL_BACKGROUND_COLOR);

@@ -11,8 +11,8 @@ class flgui {open
   Function {flgui()} {open
   } {
     Fl_Window window_main {
-      label {butt: SV98 Fanradio}
-      callback {window_main_close_cb();} open
+      label {butt 0.1.15 - SV98 Fanradio Build 1610-01}
+      callback {window_main_close_cb();} open selected
       xywh {659 127 430 420} type Double resizable
       code0 {\#include "FL/Fl_My_Double_Window.H"}
       code1 {\#include <stdlib.h> 
@@ -203,7 +203,7 @@ class flgui {open
         label {+24dB}
         xywh {390 167 30 16} labelfont 1 labelsize 10
       }
-      Fl_Output showtime {selected
+      Fl_Output showtime {
         xywh {5 390 110 25}
       }
     }
