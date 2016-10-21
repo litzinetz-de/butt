@@ -77,15 +77,15 @@ FLTK/Fl_ILM216.o: FLTK/Fl_ILM216.cpp /usr/include/stdc-predef.h \
  /usr/include/FL/Fl_Box.H /usr/include/FL/Fl_Text_Display.H \
  /usr/include/FL/fl_draw.H /usr/include/FL/Fl_Scrollbar.H \
  /usr/include/FL/Fl_Slider.H /usr/include/FL/Fl_Text_Buffer.H \
- /usr/include/FL/Fl_Tabs.H /usr/include/FL/Fl_Choice.H \
- /usr/include/FL/Fl_Menu_.H /usr/include/FL/Fl_Menu_Item.H \
- /usr/include/FL/Fl_Input.H /usr/include/FL/Fl_Input_.H \
- /usr/include/FL/Fl_Value_Input.H /usr/include/FL/Fl_Input.H \
- /usr/include/FL/Fl_Check_Button.H /usr/include/FL/Fl_Light_Button.H \
- /usr/include/FL/Fl_Button.H /usr/include/FL/Fl_Int_Input.H \
- /usr/include/FL/Fl_Round_Button.H FLTK/../xpm/rec.xpm \
- FLTK/../xpm/rec_dark.xpm FLTK/../xpm/rec_armed.xpm FLTK/../xpm/conn.xpm \
- FLTK/../xpm/conn_dark.xpm
+ /usr/include/FL/Fl_Output.H /usr/include/FL/Fl_Input.H \
+ /usr/include/FL/Fl_Input_.H /usr/include/FL/Fl_Tabs.H \
+ /usr/include/FL/Fl_Choice.H /usr/include/FL/Fl_Menu_.H \
+ /usr/include/FL/Fl_Menu_Item.H /usr/include/FL/Fl_Input.H \
+ /usr/include/FL/Fl_Value_Input.H /usr/include/FL/Fl_Check_Button.H \
+ /usr/include/FL/Fl_Light_Button.H /usr/include/FL/Fl_Button.H \
+ /usr/include/FL/Fl_Int_Input.H /usr/include/FL/Fl_Round_Button.H \
+ FLTK/../xpm/rec.xpm FLTK/../xpm/rec_dark.xpm FLTK/../xpm/rec_armed.xpm \
+ FLTK/../xpm/conn.xpm FLTK/../xpm/conn_dark.xpm
 
 /usr/include/stdc-predef.h:
 
@@ -369,6 +369,12 @@ parseconfig.h:
 
 /usr/include/FL/Fl_Text_Buffer.H:
 
+/usr/include/FL/Fl_Output.H:
+
+/usr/include/FL/Fl_Input.H:
+
+/usr/include/FL/Fl_Input_.H:
+
 /usr/include/FL/Fl_Tabs.H:
 
 /usr/include/FL/Fl_Choice.H:
@@ -379,11 +385,7 @@ parseconfig.h:
 
 /usr/include/FL/Fl_Input.H:
 
-/usr/include/FL/Fl_Input_.H:
-
 /usr/include/FL/Fl_Value_Input.H:
-
-/usr/include/FL/Fl_Input.H:
 
 /usr/include/FL/Fl_Check_Button.H:
 

@@ -93,7 +93,8 @@ butt.o: butt.cpp /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/c++/4.8/bits/codecvt.h /usr/include/c++/4.8/cstdio \
  /usr/include/x86_64-linux-gnu/c++/4.8/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++io.h \
- /usr/include/c++/4.8/bits/fstream.tcc /usr/include/lame/lame.h \
+ /usr/include/c++/4.8/bits/fstream.tcc /usr/include/c++/4.8/sstream \
+ /usr/include/c++/4.8/bits/sstream.tcc /usr/include/lame/lame.h \
  /usr/include/signal.h /usr/include/x86_64-linux-gnu/bits/signum.h \
  /usr/include/x86_64-linux-gnu/bits/siginfo.h \
  /usr/include/x86_64-linux-gnu/bits/sigaction.h \
@@ -150,14 +151,14 @@ butt.o: butt.cpp /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/FL/Fl_Text_Display.H /usr/include/FL/fl_draw.H \
  /usr/include/FL/Fl_Widget.H /usr/include/FL/Fl_Scrollbar.H \
  /usr/include/FL/Fl_Slider.H /usr/include/FL/Fl_Text_Buffer.H \
- /usr/include/FL/Fl_Tabs.H /usr/include/FL/Fl_Choice.H \
- /usr/include/FL/Fl_Menu_.H /usr/include/FL/Fl_Menu_Item.H \
- /usr/include/FL/Fl_Input.H /usr/include/FL/Fl_Input_.H \
- /usr/include/FL/Fl_Value_Input.H /usr/include/FL/Fl_Input.H \
- /usr/include/FL/Fl_Check_Button.H /usr/include/FL/Fl_Light_Button.H \
- /usr/include/FL/Fl_Button.H /usr/include/FL/Fl_Int_Input.H \
- /usr/include/FL/Fl_Round_Button.H FLTK/fl_funcs.h \
- /usr/include/FL/fl_ask.H FLTK/fl_timer_funcs.h
+ /usr/include/FL/Fl_Output.H /usr/include/FL/Fl_Input.H \
+ /usr/include/FL/Fl_Input_.H /usr/include/FL/Fl_Tabs.H \
+ /usr/include/FL/Fl_Choice.H /usr/include/FL/Fl_Menu_.H \
+ /usr/include/FL/Fl_Menu_Item.H /usr/include/FL/Fl_Input.H \
+ /usr/include/FL/Fl_Value_Input.H /usr/include/FL/Fl_Check_Button.H \
+ /usr/include/FL/Fl_Light_Button.H /usr/include/FL/Fl_Button.H \
+ /usr/include/FL/Fl_Int_Input.H /usr/include/FL/Fl_Round_Button.H \
+ FLTK/fl_funcs.h /usr/include/FL/fl_ask.H FLTK/fl_timer_funcs.h
 
 /usr/include/stdc-predef.h:
 
@@ -401,6 +402,10 @@ butt.o: butt.cpp /usr/include/stdc-predef.h /usr/include/stdio.h \
 
 /usr/include/c++/4.8/bits/fstream.tcc:
 
+/usr/include/c++/4.8/sstream:
+
+/usr/include/c++/4.8/bits/sstream.tcc:
+
 /usr/include/lame/lame.h:
 
 /usr/include/signal.h:
@@ -625,6 +630,12 @@ cfg.h:
 
 /usr/include/FL/Fl_Text_Buffer.H:
 
+/usr/include/FL/Fl_Output.H:
+
+/usr/include/FL/Fl_Input.H:
+
+/usr/include/FL/Fl_Input_.H:
+
 /usr/include/FL/Fl_Tabs.H:
 
 /usr/include/FL/Fl_Choice.H:
@@ -635,11 +646,7 @@ cfg.h:
 
 /usr/include/FL/Fl_Input.H:
 
-/usr/include/FL/Fl_Input_.H:
-
 /usr/include/FL/Fl_Value_Input.H:
-
-/usr/include/FL/Fl_Input.H:
 
 /usr/include/FL/Fl_Check_Button.H:
 

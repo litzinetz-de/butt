@@ -21,6 +21,7 @@
 // Daniel Litzbach
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 #include <lame/lame.h>
 #include <signal.h>
@@ -70,7 +71,13 @@ unsigned int record_start_hour;
 // Daniel Litzbach
 char commandfile_path[100];
 char statusfile_path[100];
+char tsfile_path[100];
 std::string last_command;
+int startup_ts=0;
+//bool startup_warn_enabled=false;
+bool startup_warn_toggle=false;
+bool no_startup_warn=false;
+bool startup_prewarn_enabled=false;
 
 sec_timer rec_timer;
 sec_timer stream_timer;
@@ -85,12 +92,41 @@ flac_enc flac_rec;
 aac_enc aac_stream;
 aac_enc aac_rec;
 
+std::string IntToStr(int x)
+{
+	std::stringstream buffer1;
+	buffer1 << x;
+	std::string buffer2(buffer1.str());
+	return buffer2;
+}
+
 void reset_commandfile()
 {
 	std::ofstream commandfile_handle;
 	commandfile_handle.open(commandfile_path);
 	commandfile_handle << "";
 	commandfile_handle.close();
+}
+
+std::string ConvertSecondsToHuman(int s,std::string Pre="")
+{
+	std::string FillZeroS="";
+	std::string FillZeroM="";
+	int hours = s / 3600;
+	s = s % 3600;
+	int minutes =  s / 60;
+	s = s % 60;
+	int seconds = s;
+	if(seconds<10)
+	{
+		FillZeroS="0";
+	}
+	if(minutes<10)
+	{
+		FillZeroM="0";
+	}
+	std::string buffer = Pre+IntToStr(hours)+":"+FillZeroM+IntToStr(minutes)+":"+FillZeroS+IntToStr(seconds);
+	return buffer;
 }
 
 // Daniel Litzbach
@@ -128,6 +164,50 @@ void process_commandfile(void*)
 	Fl::repeat_timeout(0.2, process_commandfile);
 }
 
+void update_showtime(void*)
+{
+	int thetime=time(0);
+	int ts_diff;
+	std::string Pre;
+	if(thetime>startup_ts) // Show already started
+	{
+		ts_diff=thetime-startup_ts;
+		Pre="+";
+		if(connected)
+		{
+			fl_g->showtime->color(FL_GREEN); // Show already started and we're connected -> field green
+			no_startup_warn=true; // Don't warn anymore
+		} else if(!no_startup_warn) {
+			if(startup_warn_toggle) // Show already startet an we're not connected -> blink red
+			{
+				fl_g->showtime->color(FL_RED);
+				startup_warn_toggle=false;
+			} else {
+				fl_g->showtime->color(FL_WHITE);
+				startup_warn_toggle=true;
+			}
+		}
+	} else if(thetime<startup_ts) { // Show not started yet
+		ts_diff=startup_ts-thetime;
+		Pre="-";
+		if(ts_diff<300 && !startup_prewarn_enabled) // Show starting in 5 Minutes
+		{
+			fl_g->showtime->color(FL_YELLOW);
+			startup_prewarn_enabled=true;
+		}
+	} else if(thetime==startup_ts) { // Show starting NOW
+		ts_diff=0;
+		Pre="";
+	}
+	//std::string buffer = IntToStr(ts_diff);
+	std::string buffer = ConvertSecondsToHuman(ts_diff,Pre);
+	const char * c = buffer.c_str();
+	fl_g->showtime->value(c);
+	//fl_g->showtime->color(FL_RED);
+	
+	Fl::repeat_timeout(0.2, update_showtime);
+}
+
 int main(int argc, char *argv[])
 {
 
@@ -146,6 +226,17 @@ int main(int argc, char *argv[])
     statusfile_handle.open(statusfile_path);
     statusfile_handle << "disconn";
     statusfile_handle.close();
+    
+    strcpy(tsfile_path,getenv("HOME"));
+    strcat(tsfile_path,"/.butt_ts.dat");
+    std::string line;
+    std::ifstream tsfile_handle(tsfile_path);
+    if(tsfile_handle.is_open())
+    {
+    	getline(tsfile_handle,line);
+	tsfile_handle.close();
+	startup_ts=atoi(line.c_str());
+    }
 
 #ifndef _WIN32
     signal(SIGPIPE, SIG_IGN); //ignore the SIGPIPE signal.
@@ -170,6 +261,8 @@ int main(int argc, char *argv[])
     SendMessage(fl_xid(fl_g->window_main), WM_SETICON, ICON_SMALL, (LPARAM)smallicon); 
 #endif 
 
+    //fl_g->showtime->value("123");
+    //update_showtime(void);
 
     snprintf(info_buf, sizeof(info_buf), "Starting %s\nWritten by Daniel Nöthen\n"
     	"Supercharged by Daniel Litzbach / SV98 Fanradio\n", PACKAGE_STRING);
@@ -253,6 +346,7 @@ int main(int argc, char *argv[])
     Fl::add_timeout(0.01, &vu_meter_timer);
     Fl::add_timeout(5, &display_rotate_timer);
     Fl::add_timeout(0.2, process_commandfile); // Daniel Litzbach
+    Fl::add_timeout(1,update_showtime); // Daniel Litzbach
 
     strcpy(lcd_buf, "idle");
     PRINT_LCD(lcd_buf, strlen(lcd_buf), 0, 1);

@@ -1,5 +1,5 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0303 
+version 1.0302 
 header_name {.h} 
 code_name {.cpp}
 class flgui {open
@@ -11,8 +11,9 @@ class flgui {open
   Function {flgui()} {open
   } {
     Fl_Window window_main {
+      label {butt: SV98 Fanradio}
       callback {window_main_close_cb();} open
-      xywh {659 127 430 380} type Double resizable
+      xywh {659 127 430 420} type Double resizable
       code0 {\#include "FL/Fl_My_Double_Window.H"}
       code1 {\#include <stdlib.h> 
 \#include "config.h"}
@@ -39,19 +40,19 @@ class flgui {open
           class Fl_ILM216
         }
         Fl_Button button_connect {
-          label {@> }
+          label Live
           callback {button_connect_cb();}
-          tooltip {connect to server} xywh {102 121 30 30} box ENGRAVED_BOX down_box ENGRAVED_BOX shortcut 0x40063 color 48 selection_color 40 labelfont 1 labelcolor 7
+          tooltip {connect to server} xywh {102 121 30 30} box ENGRAVED_BOX down_box ENGRAVED_BOX shortcut 0x40063 color 70 selection_color 40 labelfont 1 labelsize 10 labelcolor 7
         }
         Fl_Button button_disconnect {
-          label {@-3square}
+          label Stop
           callback {button_disconnect_cb();}
-          private tooltip {disconnect from server} xywh {62 121 30 30} box ENGRAVED_BOX down_box ENGRAVED_BOX shortcut 0x40064 color 48 selection_color 40 labelfont 1 labelcolor 7
+          private tooltip {disconnect from server} xywh {62 121 30 30} box ENGRAVED_BOX down_box ENGRAVED_BOX shortcut 0x40064 color 89 selection_color 40 labelfont 1 labelsize 10 labelcolor 7
         }
         Fl_Button button_record {
           label {@-3circle}
           callback {button_record_cb();}
-          private tooltip {start/stop recording} xywh {10 121 30 30} box ENGRAVED_BOX down_box ENGRAVED_BOX shortcut 0x40072 color 48 selection_color 40 labelfont 1 labelcolor 1
+          private tooltip {start/stop recording} xywh {10 121 30 30} box ENGRAVED_BOX down_box ENGRAVED_BOX shortcut 0x40072 color 220 selection_color 40 labelfont 1 labelcolor 1
         }
         Fl_Button button_info {
           label {More @2<}
@@ -202,6 +203,9 @@ class flgui {open
         label {+24dB}
         xywh {390 167 30 16} labelfont 1 labelsize 10
       }
+      Fl_Output showtime {selected
+        xywh {5 390 110 25}
+      }
     }
     Fl_Window window_cfg {
       label {butt settings}
@@ -215,7 +219,7 @@ button_cfg->label("Settings@>");} open
         xywh {-1 0 301 520} selection_color 41
       } {
         Fl_Group {} {
-          label Main open selected
+          label Main open
           xywh {0 20 300 500} when 6
         } {
           Fl_Group {} {
@@ -859,7 +863,7 @@ else
       }
     }
     code {Fl::scheme("standard");
-window_main->label(PACKAGE_STRING);
+//window_main->label(PACKAGE_STRING);
 
 info_buffer = new Fl_Text_Buffer();
 info_output->buffer(info_buffer);
